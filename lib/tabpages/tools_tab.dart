@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, unnecessary_cast
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +31,7 @@ class Material {
 class ToolsTab extends StatefulWidget {
   final bool isAdmin;
 
-  ToolsTab({required this.isAdmin});
+  const ToolsTab({super.key, required this.isAdmin});
 
   @override
   _ToolsTabState createState() => _ToolsTabState();
@@ -89,7 +91,7 @@ class _ToolsTabState extends State<ToolsTab> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('🛠 Productos variados'),
+          title: const Text('🛠 Productos variados'),
         ),
         body: Column(
           children: [
@@ -100,7 +102,7 @@ class _ToolsTabState extends State<ToolsTab> {
                 decoration: InputDecoration(
                   hintText: '🔎 Buscar producto...',
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.clear),
+                    icon: const Icon(Icons.clear),
                     onPressed: () {
                       _searchController.clear();
                       _searchMaterials('');
@@ -121,7 +123,7 @@ class _ToolsTabState extends State<ToolsTab> {
                     onTap: () => _showMaterialDetails(context, material),
                     trailing: widget.isAdmin
                         ? IconButton(
-                      icon: Icon(Icons.delete, color: Colors.red),
+                      icon: const Icon(Icons.delete, color: Colors.red),
                       onPressed: () => _confirmDeleteMaterial(context, material),
                     )
                         : null,
@@ -145,18 +147,18 @@ class _ToolsTabState extends State<ToolsTab> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Comentarios:', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text('Comentarios:', style: TextStyle(fontWeight: FontWeight.bold)),
                 Text(material.comments),
-                Text('Peso:', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text('Peso:', style: TextStyle(fontWeight: FontWeight.bold)),
                 Text('${material.weight} gramos'),
-                Text('Elementos:', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text('Elementos:', style: TextStyle(fontWeight: FontWeight.bold)),
                 Text(material.elementsWeights.entries.map((e) => '${e.key}: ${e.value} gramos').join(', ')),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Nivel de desgaste:', style: TextStyle(fontWeight: FontWeight.bold)),
+                      const Text('Nivel de desgaste:', style: TextStyle(fontWeight: FontWeight.bold)),
                       LinearProgressIndicator(
                         value: material.wearLevel / 10,
                         backgroundColor: Colors.grey,
@@ -167,7 +169,7 @@ class _ToolsTabState extends State<ToolsTab> {
                     ],
                   ),
                 ),
-                Text('Última actualización:', style: TextStyle(fontWeight: FontWeight.bold)),
+                const Text('Última actualización:', style: TextStyle(fontWeight: FontWeight.bold)),
                 Text(DateFormat('dd-MM-yyyy – kk:mm').format(material.lastUpdated)),
               ],
             ),
@@ -179,11 +181,11 @@ class _ToolsTabState extends State<ToolsTab> {
                   backgroundColor: Theme.of(context).primaryColor,
                   foregroundColor: Colors.white,
                 ),
-                child: Text('✏ Editar'),
+                child: const Text('✏ Editar'),
                 onPressed: () => _editMaterial(context, material),
               ),
             ElevatedButton(
-              child: Text('Cerrar'),
+              child: const Text('Cerrar'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -210,12 +212,12 @@ class _ToolsTabState extends State<ToolsTab> {
               children: [
                 TextField(
                   controller: commentsController,
-                  decoration: InputDecoration(labelText: 'Comentarios'),
+                  decoration: const InputDecoration(labelText: 'Comentarios'),
                 ),
                 TextField(
                   controller: weightController,
-                  decoration: InputDecoration(labelText: 'Peso'),
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: const InputDecoration(labelText: 'Peso'),
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 ),
                 DropdownButton<int>(
                   value: selectedWearLevel,
@@ -237,11 +239,10 @@ class _ToolsTabState extends State<ToolsTab> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancelar'),
+              child: const Text('Cancelar'),
               onPressed: () => Navigator.of(context).pop(),
             ),
             ElevatedButton(
-              child: Text('💾 Guardar cambios'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Colors.white,
@@ -253,12 +254,13 @@ class _ToolsTabState extends State<ToolsTab> {
                   'wearLevel': selectedWearLevel.toDouble(),
                 }).then((value) {
                   Navigator.of(context).pop();
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("✅ Producto actualizado con éxito.")));
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("✅ Producto actualizado con éxito.")));
                   _loadMaterials();
                 }).catchError((error) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("❌ Error al actualizar el material.")));
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("❌ Error al actualizar el material.")));
                 });
               },
+              child: const Text('💾 Guardar cambios'),
             ),
           ],
         );
@@ -271,19 +273,19 @@ class _ToolsTabState extends State<ToolsTab> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Eliminar material'),
+          title: const Text('Eliminar material'),
           content: Text('¿Estás seguro de que quieres eliminar ${material.materialName}?'),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancelar'),
+              child: const Text('Cancelar'),
               onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
-              child: Text('Eliminar'),
+              child: const Text('Eliminar'),
               onPressed: () {
                 FirebaseFirestore.instance.collection('materials').doc(material.id).delete().then((_) {
                   Navigator.of(context).pop();
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("✅ Producto eliminado con éxito.")));
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("✅ Producto eliminado con éxito.")));
                   _loadMaterials();
                 }).catchError((error) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("❌ Error al eliminar el producto: $error")));

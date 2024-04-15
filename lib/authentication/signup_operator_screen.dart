@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '/authentication/login_operator_screen.dart';
@@ -9,6 +11,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import '../mainScreens/operator_main_screen.dart';
 
 class SignUpOperatorScreen extends StatefulWidget {
+  const SignUpOperatorScreen({super.key});
+
   @override
   _SignUpOperatorScreenState createState() => _SignUpOperatorScreenState();
 }
@@ -48,7 +52,7 @@ class _SignUpOperatorScreenState extends State<SignUpOperatorScreen> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext c) {
-        return ProgressDialog(message: "Procesando. Espera...");
+        return const ProgressDialog(message: "Procesando. Espera...");
       },
     );
 
@@ -80,7 +84,7 @@ class _SignUpOperatorScreenState extends State<SignUpOperatorScreen> {
         Fluttertoast.showToast(msg: "✅ ¡La cuenta ha sido creada! ¡Bienvenido! 🥳");
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (c) => OperatorMainScreen()),
+          MaterialPageRoute(builder: (c) => const OperatorMainScreen()),
               (route) => false,
         );
       } else {
@@ -99,17 +103,17 @@ class _SignUpOperatorScreenState extends State<SignUpOperatorScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Image.asset("images/TuFlota.png"),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               const Text(
@@ -122,8 +126,8 @@ class _SignUpOperatorScreenState extends State<SignUpOperatorScreen> {
               ),
               TextField(
                 controller: nameTextEditingController,
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.grey),
+                decoration: const InputDecoration(
                   labelText: "Nombre",
                   hintText: "¿Cómo te llamas?",
                   enabledBorder: UnderlineInputBorder(
@@ -162,8 +166,8 @@ class _SignUpOperatorScreenState extends State<SignUpOperatorScreen> {
               TextField(
                 controller: emailTextEditingController,
                 keyboardType: TextInputType.emailAddress,
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.grey),
+                decoration: const InputDecoration(
                   labelText: "Email",
                   hintText: "¿Cuál es tu correo electrónico?",
                   enabledBorder: UnderlineInputBorder(
@@ -179,8 +183,8 @@ class _SignUpOperatorScreenState extends State<SignUpOperatorScreen> {
               TextField(
                 controller: idTextEditingController,
                 keyboardType: TextInputType.text,
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.grey),
+                decoration: const InputDecoration(
                   labelText: "Cédula de Identidad",
                   hintText: "Ingresa tu cédula de identidad (Ej. V14521452)",
                   enabledBorder: UnderlineInputBorder(
@@ -196,8 +200,8 @@ class _SignUpOperatorScreenState extends State<SignUpOperatorScreen> {
               TextField(
                 controller: phoneTextEditingController,
                 keyboardType: TextInputType.phone,
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.grey),
+                decoration: const InputDecoration(
                   labelText: "Teléfono",
                   hintText: "Ingresa tu número móvil (Ej. 04125445454)",
                   enabledBorder: UnderlineInputBorder(
@@ -214,8 +218,8 @@ class _SignUpOperatorScreenState extends State<SignUpOperatorScreen> {
                 controller: passwordTextEditingController,
                 keyboardType: TextInputType.text,
                 obscureText: true,
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.grey),
+                decoration: const InputDecoration(
                   labelText: "Contraseña",
                   hintText:
                   "Coloca una contraseña para tu perfil (al menos seis caracteres)",
@@ -229,7 +233,7 @@ class _SignUpOperatorScreenState extends State<SignUpOperatorScreen> {
                   labelStyle: TextStyle(color: Colors.grey, fontSize: 14),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               ElevatedButton(
@@ -239,7 +243,7 @@ class _SignUpOperatorScreenState extends State<SignUpOperatorScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                 ),
-                child: Text(
+                child: const Text(
                   "Crear cuenta",
                   style: TextStyle(
                     color: Colors.white,
@@ -248,13 +252,13 @@ class _SignUpOperatorScreenState extends State<SignUpOperatorScreen> {
                 ),
               ),
               TextButton(
-                child: Text(
+                child: const Text(
                   "¿Ya tienes una cuenta? Inicia sesión aquí",
                   style: TextStyle(color: Colors.grey),
                 ),
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (c) => LoginOperatorScreen()));
+                      MaterialPageRoute(builder: (c) => const LoginOperatorScreen()));
                 },
               ),
             ],

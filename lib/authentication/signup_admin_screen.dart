@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../widgets/progress_dialog.dart';
@@ -10,6 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../mainScreens/admin_main_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -90,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         await prefs.setBool('isOperator', false);
 
         Navigator.push(
-            context, MaterialPageRoute(builder: (c) => AdminMainScreen()));
+            context, MaterialPageRoute(builder: (c) => const AdminMainScreen()));
       } else {
         Navigator.pop(context);
         Fluttertoast.showToast(
@@ -293,7 +297,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 onPressed: () async {
                   SharedPreferences prefs = await SharedPreferences.getInstance();
                   await prefs.setBool('isOperator', true);
-                  Navigator.push(context, MaterialPageRoute(builder: (c) => LoginAdminScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (c) => const LoginAdminScreen()));
                 },
               ),
             ],

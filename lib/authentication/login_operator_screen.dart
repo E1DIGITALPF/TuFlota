@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../authentication/signup_operator_screen.dart';
@@ -9,6 +11,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginOperatorScreen extends StatefulWidget {
+  const LoginOperatorScreen({super.key});
+
   @override
   _LoginOperatorScreenState createState() => _LoginOperatorScreenState();
 }
@@ -32,7 +36,7 @@ class _LoginOperatorScreenState extends State<LoginOperatorScreen> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext c) {
-        return ProgressDialog(message: "Procesando, espera...");
+        return const ProgressDialog(message: "Procesando, espera...");
       },
     );
 
@@ -63,7 +67,7 @@ class _LoginOperatorScreenState extends State<LoginOperatorScreen> {
 
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => OperatorMainScreen()),
+              MaterialPageRoute(builder: (context) => const OperatorMainScreen()),
                   (Route<dynamic> route) => false,
             );
           } else {
@@ -91,16 +95,16 @@ class _LoginOperatorScreenState extends State<LoginOperatorScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Image.asset("images/TuFlota.png"),
               ),
-              SizedBox(height: 10),
-              Text(
+              const SizedBox(height: 10),
+              const Text(
                 "Inicia sesión como operador",
                 style: TextStyle(
                   fontSize: 24,
@@ -111,8 +115,8 @@ class _LoginOperatorScreenState extends State<LoginOperatorScreen> {
               TextField(
                 controller: emailTextEditingController,
                 keyboardType: TextInputType.emailAddress,
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.grey),
+                decoration: const InputDecoration(
                   labelText: "Email",
                   hintText: "¿Cuál es tu correo electrónico?",
                   enabledBorder: UnderlineInputBorder(
@@ -135,8 +139,8 @@ class _LoginOperatorScreenState extends State<LoginOperatorScreen> {
                 controller: passwordTextEditingController,
                 keyboardType: TextInputType.text,
                 obscureText: true,
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.grey),
+                decoration: const InputDecoration(
                   labelText: "Contraseña",
                   hintText: "Ingresa tu contraseña",
                   enabledBorder: UnderlineInputBorder(
@@ -155,7 +159,7 @@ class _LoginOperatorScreenState extends State<LoginOperatorScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   validateForm();
@@ -163,7 +167,7 @@ class _LoginOperatorScreenState extends State<LoginOperatorScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                 ),
-                child: Text(
+                child: const Text(
                   "Iniciar sesión",
                   style: TextStyle(
                     color: Colors.white,
@@ -172,14 +176,14 @@ class _LoginOperatorScreenState extends State<LoginOperatorScreen> {
                 ),
               ),
               TextButton(
-                child: Text(
+                child: const Text(
                   "¿No tienes una cuenta? Crea una aqui 👈",
                   style: TextStyle(color: Colors.grey),
                 ),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (c) => SignUpOperatorScreen()),
+                    MaterialPageRoute(builder: (c) => const SignUpOperatorScreen()),
                   );
                 },
               ),

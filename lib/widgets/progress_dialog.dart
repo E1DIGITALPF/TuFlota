@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class ProgressDialog extends StatefulWidget {
@@ -19,7 +21,7 @@ class _ProgressDialogState extends State<ProgressDialog> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: Colors.black26,
               blurRadius: 3.0,
@@ -30,14 +32,14 @@ class _ProgressDialogState extends State<ProgressDialog> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CircularProgressIndicator(
+            const CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
             ),
             const SizedBox(width: 20.0),
             Expanded(
               child: Text(
                 widget.message ?? "Cargando...",
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 18,
                   fontWeight: FontWeight.w500,

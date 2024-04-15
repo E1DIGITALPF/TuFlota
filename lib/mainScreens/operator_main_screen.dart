@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,6 +10,8 @@ import '../tabpages/home_tab.dart';
 import '../tabpages/chat_tab.dart';
 
 class OperatorMainScreen extends StatefulWidget {
+  const OperatorMainScreen({super.key});
+
   @override
   _OperatorMainScreenState createState() => _OperatorMainScreenState();
 }
@@ -46,14 +50,14 @@ class _OperatorMainScreenState extends State<OperatorMainScreen> {
         child: Scaffold(
           body: TabBarView(
             children: [
-              HomeTab(),
+              const HomeTab(),
               TrucksTab(isAdmin: isAdmin),
               ToolsTab(isAdmin: isAdmin),
-              ChatScreen(),
-              ProfileTab(),
+              const ChatScreen(),
+              const ProfileTab(),
             ],
           ),
-          bottomNavigationBar: TabBar(
+          bottomNavigationBar: const TabBar(
             tabs: [
               Tab(icon: Icon(Icons.home), text: 'Inicio'),
               Tab(icon: Icon(Icons.fire_truck), text: 'Camiones'),
@@ -74,7 +78,7 @@ class _OperatorMainScreenState extends State<OperatorMainScreen> {
 }
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: OperatorMainScreen(),
   ));
 }

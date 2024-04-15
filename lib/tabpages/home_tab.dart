@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +12,7 @@ import 'package:flutter/services.dart';
 class HomeTab extends StatefulWidget {
   final bool isAdmin;
 
-  HomeTab({this.isAdmin = false});
+  const HomeTab({super.key, this.isAdmin = false});
 
   @override
   _HomeTabState createState() => _HomeTabState();
@@ -52,12 +54,13 @@ class _HomeTabState extends State<HomeTab> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Añadir', style: TextStyle(fontWeight: FontWeight.bold)),
+          title: const Text('Añadir', style: TextStyle(fontWeight: FontWeight.bold)),
           content: SingleChildScrollView(
             child: ListBody(
               children: [
+                // ignore: prefer_const_constructors
                 _buildOptionItem(context, '🚚 Camiones', AddVehicleScreen()),
-                _buildOptionItem(context, '🛠 Varios', AddMaterialScreen()),
+                _buildOptionItem(context, '🛠 Varios', const AddMaterialScreen()),
               ],
             ),
           ),
@@ -76,7 +79,7 @@ class _HomeTabState extends State<HomeTab> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Text(option,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.blue, fontSize: 16, fontWeight: FontWeight.bold)),
       ),
     );
@@ -133,6 +136,7 @@ class _HomeTabState extends State<HomeTab> {
 
     List<Map<String, dynamic>> trucksData = [];
     for (var doc in trucksSnapshot.docs) {
+      // ignore: unnecessary_cast
       var data = doc.data() as Map<String, dynamic>;
       Map<String, dynamic> wearLevelHistorial = data['historialDesgaste'] ?? {};
       String fechaClave = DateFormat('yyyy-MM-dd').format(_selectedDate);
@@ -152,7 +156,7 @@ class _HomeTabState extends State<HomeTab> {
     }
 
     if (trucksData.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
               "🤷‍♂️ No hay datos históricos disponibles para la fecha seleccionada.")));
       return;
@@ -205,14 +209,15 @@ class _HomeTabState extends State<HomeTab> {
                 pw.SizedBox(height: 5),
                 pw.Text(
                     'Reporte de camiones hasta ${DateFormat('dd-MM-yyyy').format(_selectedDate)}',
-                    style: pw.TextStyle(fontSize: 20)),
+                    style: const pw.TextStyle(fontSize: 20)),
               ]);
         },
         build: (pw.Context context) => [
+          // ignore: deprecated_member_use
           pw.Table.fromTextArray(
             context: context,
             cellAlignment: pw.Alignment.centerLeft,
-            headerDecoration: pw.BoxDecoration(color: PdfColors.grey300),
+            headerDecoration: const pw.BoxDecoration(color: PdfColors.grey300),
             headerHeight: 25,
             cellHeight: 30,
             headerStyle: pw.TextStyle(
@@ -224,21 +229,17 @@ class _HomeTabState extends State<HomeTab> {
                 if (cellIndex == columnOrder.indexOf('status') &&
                     cell == "Requiere atención") {
                   return pw.Container(
-                    decoration: pw.BoxDecoration(color: PdfColors.red),
-                    padding: pw.EdgeInsets.all(2),
+                    decoration: const pw.BoxDecoration(color: PdfColors.red),
+                    padding: const pw.EdgeInsets.all(2),
                     child: pw.Text(cell,
-                        style: pw.TextStyle(color: PdfColors.black)),
+                        style: const pw.TextStyle(color: PdfColors.black)),
                   );
                 } else {
                   return pw.Text(cell);
                 }
               }).toList();
             }).toList(),
-            columnWidths: Map.fromIterable(
-              List.generate(headers.length, (index) => index),
-              key: (index) => index,
-              value: (index) => const pw.FlexColumnWidth(),
-            ),
+            columnWidths: { for (var index in List.generate(headers.length, (index) => index)) index : const pw.FlexColumnWidth() },
           ),
         ],
         footer: (pw.Context context) {
@@ -246,10 +247,10 @@ class _HomeTabState extends State<HomeTab> {
             mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
             children: [
               pw.Text('Generado por $fullName',
-                  style: pw.TextStyle(fontSize: 12)),
+                  style: const pw.TextStyle(fontSize: 12)),
               pw.Text(
                   'Generado el ${DateFormat('dd-MM-yy – kk:mm').format(DateTime.now())}',
-                  style: pw.TextStyle(fontSize: 12)),
+                  style: const pw.TextStyle(fontSize: 12)),
             ],
           );
         },
@@ -283,18 +284,18 @@ class _HomeTabState extends State<HomeTab> {
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () => _showAddProductPopup(context),
-                    child: Text('🟢 Añadir nuevo artículo'),
+                    child: const Text('🟢 Añadir nuevo artículo'),
                   ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () => _selectDate(context),
-                  child: Text('🔎 Consultar reportes'),
+                  child: const Text('🔎 Consultar reportes'),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 if (_showGenerateReportButton)
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -302,7 +303,7 @@ class _HomeTabState extends State<HomeTab> {
                       backgroundColor: Colors.green,
                     ),
                     onPressed: () => _generateReport(context),
-                    child: Text('📋 Generar reporte PDF'),
+                    child: const Text('📋 Generar reporte PDF'),
                   ),
               ],
             ),
@@ -314,6 +315,8 @@ class _HomeTabState extends State<HomeTab> {
 }
 
 class AddVehicleScreen extends StatefulWidget {
+  const AddVehicleScreen({super.key});
+
   @override
   _AddVehicleScreenState createState() => _AddVehicleScreenState();
 }
@@ -347,7 +350,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
         mileage == 0 ||
         color.isEmpty ||
         comments.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('❌ Por favor, completa todos los campos.'),
       ));
       return;
@@ -369,7 +372,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
       "lastUpdated": FieldValue.serverTimestamp(),
     }).then((docReference) {
       print("Saved with ID: ${docReference.id}");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('✅ Camión guardado exitosamente'),
       ));
       Navigator.pop(context);
@@ -385,40 +388,40 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('🚚 Agregar camión'),
+        title: const Text('🚚 Agregar camión'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextFormField(
               controller: brandController,
-              decoration: InputDecoration(labelText: 'Marca del camión'),
+              decoration: const InputDecoration(labelText: 'Marca del camión'),
             ),
             TextFormField(
               controller: modelController,
-              decoration: InputDecoration(labelText: 'Modelo del camión'),
+              decoration: const InputDecoration(labelText: 'Modelo del camión'),
             ),
             TextFormField(
               controller: mileageController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   labelText:
                       'Kilometraje del camión (Km, sin puntos. Ej: 12000)'),
             ),
             TextFormField(
               controller: colorController,
-              decoration: InputDecoration(labelText: 'Color del camión'),
+              decoration: const InputDecoration(labelText: 'Color del camión'),
             ),
             TextFormField(
               controller: plateController,
-              decoration: InputDecoration(labelText: 'Placa del camión'),
+              decoration: const InputDecoration(labelText: 'Placa del camión'),
             ),
             Row(
               children: [
-                Text('Año:'),
-                SizedBox(width: 16),
+                const Text('Año:'),
+                const SizedBox(width: 16),
                 DropdownButton<int>(
                   value: selectedYear,
                   items: yearsList.map((year) {
@@ -434,14 +437,14 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                       });
                     }
                   },
-                  hint: Text('Seleccione un año'),
+                  hint: const Text('Seleccione un año'),
                 ),
               ],
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
+                const Text(
                   'Salud general (1 es mal estado, 10 como nuevo):',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
@@ -475,12 +478,12 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                   });
                 }
               },
-              hint: Text('Seleccione un estado'),
+              hint: const Text('Seleccione un estado'),
             ),
             TextFormField(
               controller: commentsController,
               maxLines: 4,
-              decoration: InputDecoration(labelText: 'Comentarios'),
+              decoration: const InputDecoration(labelText: 'Comentarios'),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -488,7 +491,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                 foregroundColor: Colors.white,
               ),
               onPressed: () => saveVehicleData(context),
-              child: Text('💾 Guardar camión'),
+              child: const Text('💾 Guardar camión'),
             ),
           ],
         ),
@@ -570,6 +573,8 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
   }*/
 
 class AddMaterialScreen extends StatefulWidget {
+  const AddMaterialScreen({super.key});
+
   @override
   _AddMaterialScreenState createState() => _AddMaterialScreenState();
 }
@@ -613,7 +618,7 @@ class _AddMaterialScreenState extends State<AddMaterialScreen> {
     }
 
     if (materialName.isEmpty || weight <= 0) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('❗ Por favor, complete todos los campos necesarios.'),
       ));
       return;
@@ -627,7 +632,7 @@ class _AddMaterialScreenState extends State<AddMaterialScreen> {
       'wearLevel': wearLevel,
       'lastUpdated': FieldValue.serverTimestamp(),
     }).then((result) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('✅ Producto guardado con éxito.'),
       ));
       Navigator.pop(context);
@@ -642,24 +647,24 @@ class _AddMaterialScreenState extends State<AddMaterialScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Agregar producto'),
+        title: const Text('Agregar producto'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             TextFormField(
               controller: materialNameController,
-              decoration: InputDecoration(labelText: 'Nombre del producto'),
+              decoration: const InputDecoration(labelText: 'Nombre del producto'),
             ),
             TextFormField(
               controller: weightController,
-              decoration: InputDecoration(labelText: 'Peso (en gramos)'),
+              decoration: const InputDecoration(labelText: 'Peso (en gramos)'),
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 20),
-            Text('Elementos:'),
+            const SizedBox(height: 20),
+            const Text('Elementos:'),
             Column(
               children: elementsList.map((element) {
                 return Row(
@@ -688,8 +693,8 @@ class _AddMaterialScreenState extends State<AddMaterialScreen> {
                 );
               }).toList(),
             ),
-            SizedBox(height: 20),
-            Text('Nivel de desgaste:'),
+            const SizedBox(height: 20),
+            const Text('Nivel de desgaste:'),
             Slider(
               min: 0,
               max: 10,
@@ -702,10 +707,10 @@ class _AddMaterialScreenState extends State<AddMaterialScreen> {
                 });
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: commentsController,
-              decoration: InputDecoration(labelText: 'Comentarios'),
+              decoration: const InputDecoration(labelText: 'Comentarios'),
               maxLines: 3,
             ),
             ElevatedButton(
@@ -714,7 +719,7 @@ class _AddMaterialScreenState extends State<AddMaterialScreen> {
                 foregroundColor: Colors.white,
               ),
               onPressed: () => saveMaterialData(context),
-              child: Text('💾 Guardar producto'),
+              child: const Text('💾 Guardar producto'),
             ),
           ],
         ),

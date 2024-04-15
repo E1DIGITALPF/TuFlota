@@ -6,6 +6,8 @@ import '../tabpages/home_tab.dart';
 import '../tabpages/chat_tab.dart';
 
 class AdminMainScreen extends StatelessWidget {
+  const AdminMainScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
@@ -13,7 +15,7 @@ class AdminMainScreen extends StatelessWidget {
       onWillPop: () async {
         return false;
       },
-      child: DefaultTabController(
+      child: const DefaultTabController(
         length: 5,
         child: Scaffold(
           body: TabBarView(
@@ -46,7 +48,7 @@ class AdminMainScreen extends StatelessWidget {
 }
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: AdminMainScreen(),
   ));
 }

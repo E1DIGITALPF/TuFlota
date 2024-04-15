@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, unnecessary_cast, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -44,7 +46,7 @@ class Truck {
 class TrucksTab extends StatefulWidget {
   final bool isAdmin;
 
-  TrucksTab({this.isAdmin = false});
+  const TrucksTab({super.key, this.isAdmin = false});
 
   @override
   _TrucksTabState createState() => _TrucksTabState();
@@ -179,10 +181,10 @@ class _TrucksTabState extends State<TrucksTab> {
                         fontSize: 12, fontWeight: pw.FontWeight.bold)),
                 pw.SizedBox(height: 5),
                 pw.Text('Reporte de mantenimiento',
-                    style: pw.TextStyle(fontSize: 20)),
+                    style: const pw.TextStyle(fontSize: 20)),
                 pw.Text(
                     'Marca: ${truck.brand}, Modelo: ${truck.model}, Color: ${truck.color}, Placa: ${truck.plate}',
-                    style: pw.TextStyle(fontSize: 16)),
+                    style: const pw.TextStyle(fontSize: 16)),
                 pw.SizedBox(height: 10),
                 pw.Text('Bitácora de mantenimiento',
                     style: pw.TextStyle(
@@ -209,10 +211,10 @@ class _TrucksTabState extends State<TrucksTab> {
             mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
             children: [
               pw.Text('Generado por $fullName',
-                  style: pw.TextStyle(fontSize: 12)),
+                  style: const pw.TextStyle(fontSize: 12)),
               pw.Text(
                   'Generado el ${DateFormat('dd-MM-yy – kk:mm').format(DateTime.now())}',
-                  style: pw.TextStyle(fontSize: 12)),
+                  style: const pw.TextStyle(fontSize: 12)),
             ],
           );
         },
@@ -229,16 +231,16 @@ class _TrucksTabState extends State<TrucksTab> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Eliminar camión'),
+          title: const Text('Eliminar camión'),
           content: Text(
               '¿Estás seguro de que quieres eliminar el camión ${truck.brand} ${truck.model}?'),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancelar'),
+              child: const Text('Cancelar'),
               onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
-              child: Text('Eliminar'),
+              child: const Text('Eliminar'),
               onPressed: () {
                 _deleteTruck(truck.id);
                 Navigator.of(context).pop();
@@ -257,7 +259,7 @@ class _TrucksTabState extends State<TrucksTab> {
         .delete()
         .then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("✅ Camión eliminado con éxito.")));
+          const SnackBar(content: Text("✅ Camión eliminado con éxito.")));
       _loadTrucks();
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -283,7 +285,7 @@ class _TrucksTabState extends State<TrucksTab> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('🚛 Camiones'),
+          title: const Text('🚛 Camiones'),
           actions: widget.isAdmin
               ? [
                   PopupMenuButton<SortOption>(
@@ -294,11 +296,11 @@ class _TrucksTabState extends State<TrucksTab> {
                       });
                     },
                     itemBuilder: (context) => [
-                      PopupMenuItem(
+                      const PopupMenuItem(
                         value: SortOption.addedDate,
                         child: Text('Refinar por: Fecha añadido'),
                       ),
-                      PopupMenuItem(
+                      const PopupMenuItem(
                         value: SortOption.brandAlphabetical,
                         child: Text('Refinar por: Marca (alfabético)'),
                       ),
@@ -316,7 +318,7 @@ class _TrucksTabState extends State<TrucksTab> {
                 decoration: InputDecoration(
                   hintText: '🔎 Buscar por marca, modelo o placa...',
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.clear),
+                    icon: const Icon(Icons.clear),
                     onPressed: () {
                       _searchController.clear();
                       _searchTrucks('');
@@ -338,7 +340,7 @@ class _TrucksTabState extends State<TrucksTab> {
                     onTap: () => _showTruckDetails(context, truck),
                     trailing: widget.isAdmin
                         ? IconButton(
-                            icon: Icon(Icons.delete, color: Colors.red),
+                            icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () =>
                                 _confirmDeleteTruck(context, truck),
                           )
@@ -372,8 +374,8 @@ class _TrucksTabState extends State<TrucksTab> {
                 _buildField(context, 'Placa', truck.plate),
                 _buildField(context, 'Color', truck.color),
                 _buildField(context, 'Estado', truck.status),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
                   child: Text('Salud general:',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
@@ -397,7 +399,7 @@ class _TrucksTabState extends State<TrucksTab> {
                       Navigator.of(context).pop();
                       _navigateAndDisplayEditScreen(context, truck);
                     },
-                    child: Text('✏ Editar'),
+                    child: const Text('✏ Editar'),
                   ),
                 if (showGenerateReportButton)
                   ElevatedButton(
@@ -406,14 +408,14 @@ class _TrucksTabState extends State<TrucksTab> {
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () => _generateReport(truck),
-                    child: Text('📋 Generar reporte'),
+                    child: const Text('📋 Generar reporte'),
                   ),
               ],
             ),
           ),
           actions: <Widget>[
             ElevatedButton(
-              child: Text('Cerrar'),
+              child: const Text('Cerrar'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -434,7 +436,7 @@ class _TrucksTabState extends State<TrucksTab> {
           children: [
             TextSpan(
               text: '$fieldName: ',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(text: fieldValue),
           ],
@@ -454,8 +456,8 @@ class WearLevelThermometer extends CustomPainter {
     final centerX = size.width / 2;
     final centerY = size.height / 2;
     final radius = min(centerX, centerY) - 10;
-    final startAngle = -pi / 2;
-    final sweepAngle = pi;
+    const startAngle = -pi / 2;
+    const sweepAngle = pi;
     final paint = Paint()
       ..color = Colors.grey
       ..strokeWidth = 20
@@ -495,7 +497,7 @@ class WearLevelThermometer extends CustomPainter {
 class EditTruckScreen extends StatefulWidget {
   final Truck truck;
 
-  EditTruckScreen({required this.truck});
+  const EditTruckScreen({super.key, required this.truck});
 
   @override
   _EditTruckScreenState createState() => _EditTruckScreenState();
@@ -535,7 +537,7 @@ class _EditTruckScreenState extends State<EditTruckScreen> {
       });
       Navigator.of(context).pop();
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("✅ Camión actualizado con éxito.")));
+          const SnackBar(content: Text("✅ Camión actualizado con éxito.")));
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("❌ Error al actualizar el camión: $error")));
@@ -546,20 +548,20 @@ class _EditTruckScreenState extends State<EditTruckScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Editar camión'),
+        title: const Text('Editar camión'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
               controller: _mileageController,
-              decoration: InputDecoration(labelText: 'Kilometraje'),
+              decoration: const InputDecoration(labelText: 'Kilometraje'),
               keyboardType: TextInputType.number,
             ),
             TextField(
               controller: _colorController,
-              decoration: InputDecoration(labelText: 'Color'),
+              decoration: const InputDecoration(labelText: 'Color'),
             ),
             DropdownButton<String>(
               value: _selectedStatus,
@@ -593,25 +595,25 @@ class _EditTruckScreenState extends State<EditTruckScreen> {
             ),
             TextField(
               controller: _commentsController,
-              decoration: InputDecoration(labelText: 'Comentarios'),
+              decoration: const InputDecoration(labelText: 'Comentarios'),
               maxLines: null,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Theme.of(context).primaryColor,
                 foregroundColor: Colors.white,
               ),
               onPressed: _updateTruckDetails,
-              child: Text('💾 Guardar cambios'),
+              child: const Text('💾 Guardar cambios'),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('Cancelar'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey,
               ),
+              child: const Text('Cancelar'),
             ),
           ],
         ),

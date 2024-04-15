@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import '../global/global.dart';
 import '../mainScreens/user_type_selection_screen.dart';
@@ -6,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfileTab extends StatefulWidget {
-  ProfileTab({Key? key}) : super(key: key);
+  const ProfileTab({Key? key}) : super(key: key);
 
   @override
   State<ProfileTab> createState() => _ProfileTabState();
@@ -34,13 +36,13 @@ class _ProfileTabState extends State<ProfileTab> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancelar'),
+              child: const Text('Cancelar'),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             TextButton(
-              child: Text('Confirmar'),
+              child: const Text('Confirmar'),
               onPressed: () {
                 Navigator.pop(context, password);
               },
@@ -67,7 +69,7 @@ class _ProfileTabState extends State<ProfileTab> {
       await fAuth.currentUser!.reauthenticateWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('❌ Contraseña incorrecta'),
         ));
         return;
@@ -79,11 +81,11 @@ class _ProfileTabState extends State<ProfileTab> {
   Future<void> _updateUserCredentials() async {
     try {
       await fAuth.currentUser!.updatePassword(_passwordController.text);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('✅ Datos actualizados exitosamente'),
       ));
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('❌ Error al actualizar los datos'),
       ));
     }
@@ -131,7 +133,7 @@ class _ProfileTabState extends State<ProfileTab> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('👥 Perfil'),
+          title: const Text('👥 Perfil'),
         ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -146,7 +148,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   labelText: 'Tu correo electrónico (no se puede cambiar):',
                   labelStyle: TextStyle(color: Colors.black),
                 ),
-                style: TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.black),
               ),
               TextField(
                 controller: _passwordController,
@@ -155,9 +157,9 @@ class _ProfileTabState extends State<ProfileTab> {
                   labelStyle: TextStyle(color: Colors.black),
                 ),
                 obscureText: true,
-                style: TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.black),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
@@ -166,7 +168,7 @@ class _ProfileTabState extends State<ProfileTab> {
                 onPressed: _reauthenticateAndRetryUpdate,
                 child: const Text('Actualizar contraseña'),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
@@ -179,7 +181,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (c) => UserTypeSelectionScreen()));
+                          builder: (c) => const UserTypeSelectionScreen()));
                 },
               ),
             ],

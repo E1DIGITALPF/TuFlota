@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_declarations
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'mainScreens/user_type_selection_screen.dart';
@@ -19,7 +21,7 @@ Future<void> main() async {
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
   final InitializationSettings initializationSettings =
-      InitializationSettings(android: initializationSettingsAndroid);
+      const InitializationSettings(android: initializationSettingsAndroid);
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
@@ -28,6 +30,8 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  MyApp({super.key});
 
   Future<bool> isOperatorLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -51,33 +55,35 @@ class MyApp extends StatelessWidget {
             } else {
               bool isOperatorLoggedIn = snapshot.data!;
               if (isOperatorLoggedIn) {
-                return OperatorMainScreen();
+                return const OperatorMainScreen();
               } else {
-                return UserTypeSelectionScreen();
+                return const UserTypeSelectionScreen();
               }
             }
           } else {
-            return SplashScreen();
+            return const SplashScreen();
           }
         },
       ),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/userTypeSelection': (context) => UserTypeSelectionScreen(),
-        '/loginAdmin': (context) => LoginAdminScreen(),
-        '/loginOperator': (context) => LoginOperatorScreen(),
-        '/operatorMainScreen': (context) => OperatorMainScreen(),
-        '/adminMainScreen': (context) => AdminMainScreen(),
-        '/trucksTab': (context) => TrucksTab(),
+        '/userTypeSelection': (context) => const UserTypeSelectionScreen(),
+        '/loginAdmin': (context) => const LoginAdminScreen(),
+        '/loginOperator': (context) => const LoginOperatorScreen(),
+        '/operatorMainScreen': (context) => const OperatorMainScreen(),
+        '/adminMainScreen': (context) => const AdminMainScreen(),
+        '/trucksTab': (context) => const TrucksTab(),
       },
     );
   }
 }
 
 class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(child: CircularProgressIndicator()),
     );
   }

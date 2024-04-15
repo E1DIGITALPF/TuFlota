@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, unrelated_type_equality_checks
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
@@ -5,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -16,7 +20,7 @@ class _ChatScreenState extends State<ChatScreen> {
   bool isAdmin = false;
   bool isUserInfoLoaded = false;
   bool isNewMessage = false;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   bool _showLegend = true;
 
   @override
@@ -115,13 +119,13 @@ class _ChatScreenState extends State<ChatScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('📢 Chat global'),
+          title: const Text('📢 Chat global'),
         ),
         body: Column(
           children: <Widget>[
             if (_showLegend)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text(
                   "🔵 Operadores  🟡 Administradores  🔴 Sistema",
                   style: TextStyle(fontSize: 14),
@@ -136,7 +140,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                   List<DocumentSnapshot> docs = snapshot.data!.docs;
 
@@ -170,7 +174,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               height: 70,
               child: Row(
                 children: <Widget>[
@@ -191,7 +195,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.send),
+                    icon: const Icon(Icons.send),
                     onPressed: isUserInfoLoaded ? _sendMessage : null,
                   ),
                 ],
@@ -212,7 +216,7 @@ class Message extends StatelessWidget {
   final bool isSystemMessage;
   final Timestamp? timestamp;
 
-  Message({
+  const Message({super.key, 
     required this.text,
     required this.isMe,
     required this.userName,
@@ -243,7 +247,7 @@ class Message extends StatelessWidget {
     DateTime date = timestamp?.toDate() ?? DateTime.now();
 
     return Container(
-      margin: EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
+      margin: const EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
       child: Column(
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -254,17 +258,17 @@ class Message extends StatelessWidget {
                   EdgeInsets.only(left: isMe ? 0 : 10, right: isMe ? 10 : 0),
               child: Text(
                 userName,
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
               ),
             ),
           ChatBubble(
             clipper: ChatBubbleClipper1(
                 type: isMe ? BubbleType.sendBubble : BubbleType.receiverBubble),
             alignment: isMe ? Alignment.topRight : Alignment.topLeft,
-            margin: EdgeInsets.only(top: 4),
+            margin: const EdgeInsets.only(top: 4),
             backGroundColor: bubbleColor,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -272,10 +276,10 @@ class Message extends StatelessWidget {
                     text,
                     style: TextStyle(color: textColor),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     DateFormat('dd/MM/yyyy hh:mm a').format(date),
-                    style: TextStyle(color: Colors.black54, fontSize: 10),
+                    style: const TextStyle(color: Colors.black54, fontSize: 10),
                   ),
                 ],
               ),

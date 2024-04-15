@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../mainScreens/admin_main_screen.dart';
@@ -33,7 +35,7 @@ class _LoginScreenState extends State<LoginAdminScreen> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext c) {
-        return ProgressDialog(message: "Procesando. Espera...");
+        return const ProgressDialog(message: "Procesando. Espera...");
       },
     );
 
@@ -60,7 +62,7 @@ class _LoginScreenState extends State<LoginAdminScreen> {
 
             Navigator.pushAndRemoveUntil(
               context,
-              MaterialPageRoute(builder: (context) => AdminMainScreen()),
+              MaterialPageRoute(builder: (context) => const AdminMainScreen()),
                   (Route<dynamic> route) => false,
             );
           } else {
@@ -88,16 +90,16 @@ class _LoginScreenState extends State<LoginAdminScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Padding(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 child: Image.asset("images/TuFlota.png"),
               ),
-              SizedBox(height: 10),
-              Text(
+              const SizedBox(height: 10),
+              const Text(
                 "Inicia sesión como administrador",
                 style: TextStyle(
                   fontSize: 24,
@@ -108,8 +110,8 @@ class _LoginScreenState extends State<LoginAdminScreen> {
               TextField(
                 controller: emailTextEditingController,
                 keyboardType: TextInputType.emailAddress,
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.grey),
+                decoration: const InputDecoration(
                   labelText: "Email",
                   hintText: "¿Cuál es tu correo electrónico?",
                   enabledBorder: UnderlineInputBorder(
@@ -132,8 +134,8 @@ class _LoginScreenState extends State<LoginAdminScreen> {
                 controller: passwordTextEditingController,
                 keyboardType: TextInputType.text,
                 obscureText: true,
-                style: TextStyle(color: Colors.grey),
-                decoration: InputDecoration(
+                style: const TextStyle(color: Colors.grey),
+                decoration: const InputDecoration(
                   labelText: "Contraseña",
                   hintText: "Ingresa tu contraseña",
                   enabledBorder: UnderlineInputBorder(
@@ -152,7 +154,7 @@ class _LoginScreenState extends State<LoginAdminScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   validateForm();
@@ -160,7 +162,7 @@ class _LoginScreenState extends State<LoginAdminScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                 ),
-                child: Text(
+                child: const Text(
                   "Iniciar sesión",
                   style: TextStyle(
                     color: Colors.white,
@@ -169,12 +171,12 @@ class _LoginScreenState extends State<LoginAdminScreen> {
                 ),
               ),
               TextButton(
-                child: Text(
+                child: const Text(
                   "¿No tienes una cuenta? Crea una aquí 👈",
                   style: TextStyle(color: Colors.grey),
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (c) => SignUpScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (c) => const SignUpScreen()));
                 },
               ),
             ],

@@ -1,0 +1,60 @@
+name: tuflota
+description: 'Aplicación para administrar flota de vehículos'
+
+publish_to: 'none'
+
+version: 0.0.1
+
+environment:
+  sdk: '>=2.19.6 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  fluttertoast: ^8.2.2
+  flutter_chat_bubble: ^2.0.2
+  flutter_local_notifications: ^14.1.1
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.0
+  shared_preferences: ^2.1.1
+  cupertino_icons: ^1.0.5
+  http: ^0.13.5
+  url_launcher: ^6.1.11
+  async: ^2.11.0
+  permission_handler: ^10.2.0
+  rxdart: ^0.26.0
+  firebase_messaging: ^14.6.1
+  firebase_core: ^2.13.0
+  firebase_auth: ^4.6.1
+  firebase_database: ^10.2.1
+  cloud_firestore: ^4.7.1
+  intl: ^0.18.1
+  path_provider: ^2.0.15
+  syncfusion_flutter_calendar: ^22.2.7
+  pdf: ^3.10.4
+  flutter_pdfview: ^1.2.7
+  printing: ^5.12.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.1
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "web/icons/logo.png"
+  adaptive_icon_background: "web/icons/logo.png"
+  adaptive_icon_foreground: "web/icons/logo.png"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - images/
+    - assets/fonts/
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700

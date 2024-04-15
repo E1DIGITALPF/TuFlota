@@ -9,6 +9,7 @@ class UserTypeSelectionScreen extends StatelessWidget {
       body: Container(
         color: Colors.white,
         child: Center(
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -50,6 +51,7 @@ class UserTypeSelectionScreen extends StatelessWidget {
               ],
             ),
           ),
+        ),
         ),
       ),
     );

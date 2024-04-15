@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_declarations
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter/services.dart';
 import 'mainScreens/user_type_selection_screen.dart';
 import 'authentication/login_admin_screen.dart';
 import 'authentication/login_operator_screen.dart';
@@ -11,18 +13,27 @@ import 'tabpages/trucks_tab.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
 
-  const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('@mipmap/ic_launcher');
-  final InitializationSettings initializationSettings =
-      const InitializationSettings(android: initializationSettingsAndroid);
+  final configString = await rootBundle.loadString('web/config.json');
+  final config = jsonDecode(configString);
 
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: config['FIREBASE_API_KEY'],
+      authDomain: config['FIREBASE_AUTH_DOMAIN'],
+      projectId: config['FIREBASE_PROJECT_ID'],
+      storageBucket: config['FIREBASE_STORAGE_BUCKET'],
+      messagingSenderId: config['FIREBASE_MESSAGING_SENDER_ID'],
+      appId: config['FIREBASE_APP_ID'],
+    ),
+  );
+
+  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+  final InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   runApp(MyApp());

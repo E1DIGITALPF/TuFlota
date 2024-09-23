@@ -22,7 +22,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String plate = remoteMessage.getData().get("plate");
             String message = "Marca: " + brand + ", Modelo: " + model + ", Color: " + color + ", Placa: " + plate;
 
-            createNotification(remoteMessage.getNotification().getTitle(), message);
+            String title = remoteMessage.getNotification() != null ? remoteMessage.getNotification().getTitle() : "Nuevo vehículo";
+            createNotification(title, message);
         }
     }
 
@@ -41,20 +42,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+            pendingIntent = PendingIntent.getActivity(this, 0 /* Código de solicitud */, intent,
                     PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         } else {
-            pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+            pendingIntent = PendingIntent.getActivity(this, 0 /* Código de solicitud */, intent,
                     PendingIntent.FLAG_ONE_SHOT);
         }
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId)
                 .setContentTitle(title)
                 .setContentText(messageBody)
-                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(0 /* ID de notificación*/, notificationBuilder.build());
     }
 }

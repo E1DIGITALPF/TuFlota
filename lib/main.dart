@@ -13,27 +13,36 @@ import 'tabpages/trucks_tab.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final configString = await rootBundle.loadString('web/config.json');
-  final config = jsonDecode(configString);
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    print("Error initializing Firebase: $e");
 
-  await Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey: config['FIREBASE_API_KEY'],
-      authDomain: config['FIREBASE_AUTH_DOMAIN'],
-      projectId: config['FIREBASE_PROJECT_ID'],
-      storageBucket: config['FIREBASE_STORAGE_BUCKET'],
-      messagingSenderId: config['FIREBASE_MESSAGING_SENDER_ID'],
-      appId: config['FIREBASE_APP_ID'],
-    ),
-  );
+    final configString = await rootBundle.loadString('web/config.json');
+    final config = jsonDecode(configString);
 
-  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
-  final InitializationSettings initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
+    await Firebase.initializeApp(
+      options: FirebaseOptions(
+        apiKey: config['FIREBASE_API_KEY'],
+        authDomain: config['FIREBASE_AUTH_DOMAIN'],
+        projectId: config['FIREBASE_PROJECT_ID'],
+        storageBucket: config['FIREBASE_STORAGE_BUCKET'],
+        messagingSenderId: config['FIREBASE_MESSAGING_SENDER_ID'],
+        appId: config['FIREBASE_APP_ID'],
+      ),
+    );
+  }
+
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+  final InitializationSettings initializationSettings =
+      InitializationSettings(android: initializationSettingsAndroid);
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   runApp(MyApp());
